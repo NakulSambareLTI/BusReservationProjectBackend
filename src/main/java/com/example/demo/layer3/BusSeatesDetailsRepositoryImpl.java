@@ -31,7 +31,7 @@ public class BusSeatesDetailsRepositoryImpl extends BaseRepository implements Bu
     		}
 
         @Transactional
-		public List<BusSeatesDetails> selectBusSeatesDetailsByReservationId(String ReservationID)
+		public List<BusSeatesDetails> selectBusSeatesDetailsByReservationId(int ReservationID)
 				throws BusSeatDetailsNotFoundException {
 			// TODO Auto-generated method stub
         	EntityManager entityManager = getEntityManager();
@@ -62,4 +62,44 @@ public class BusSeatesDetailsRepositoryImpl extends BaseRepository implements Bu
     		List<BusSeatesDetails> busSeatesDetailsbyjourneyID= query.getResultList();
     		return busSeatesDetailsbyjourneyID;
 		}
+        
+        
+        
+        
+        
+        @Transactional
+    	public void updateBusSeatesDetails(int rID,int jID,String s_no) {
+    		EntityManager entityManager = getEntityManager();
+    		Query query=entityManager.createQuery("update BusSeatesDetails set reservation_id=:rID where journey_id=:jID and seat_no=:s_no").setParameter("jID",jID).setParameter("rID", rID).setParameter("s_no",s_no);
+    		//query.setParameter("rID", rID);
+    		query.executeUpdate();
+    		
+    		
+    		
+    	}
+
+    	//@Override
+    	@Transactional
+    	public void updateBusSeatesDetailsListSeat(int rID, int jID, List<String> seat_no) {
+    		EntityManager entityManager=getEntityManager();
+//    		String seat_no1;
+    		for(String seat_no1: seat_no) {
+    			System.out.println(seat_no1);
+    		Query query=entityManager.createQuery("update BusSeatesDetails set reservation_id=:rID where journey_id=:jID and seat_no=:s_no").setParameter("jID",jID).setParameter("rID", rID).setParameter("s_no",seat_no1);
+    		
+    		query.executeUpdate();
+    		
+    		}
+    		
+    		
+    	}
+        
+    	@Transactional
+    	public void updateSeatDetails(int rID) throws NumberNotFoundException{
+    	EntityManager entityManager = getEntityManager();
+    	Query query = entityManager.createQuery("update BusSeatesDetails b set b.reservation_id=0 where b.reservation_id = :rID");
+    	query.setParameter("rID", rID);
+    	query.executeUpdate();
+    	}
+        
 }

@@ -51,16 +51,16 @@ password varchar2(20)
 );
 
 create table transaction_details(
-transaction_id varchar2(20) PRIMARY KEY,
+transaction_id number(10) PRIMARY KEY,
 registered_email varchar2(30),
 unregistered_email varchar2(30),
-reservation_id varchar2(20),
+reservation_id number(10),
 transaction_date date,
-payment_id varchar2(20)
+payment_id number(10)
 );
 
 create table reservation_details(
-reservation_id varchar2(20) PRIMARY KEY,
+reservation_id number(10) PRIMARY KEY,
 registered_email varchar2(30),
 unregistered_email varchar2(30),
 seats_booked number(10),
@@ -73,13 +73,14 @@ reservation_time varchar2(10)
 
 
 create table payment_details(
-payment_id varchar2(20) PRIMARY KEY,
+payment_id number(10) PRIMARY KEY,
 registered_email varchar2(30),
 unregistered_email varchar2(30),
-reservation_id varchar2(20),
+reservation_id number(10),
 payment_date date,
 total_amount_paid number(5)
 );
+
 
 create table customer_wallet(
 registered_email varchar(20) unique,
@@ -97,7 +98,7 @@ Gender varchar2(8)
 
 create table Bus_Seates_Details(
 Seat_No varchar2(5),
-reservation_id varchar2(20),
+reservation_id number(10),
 journey_id number(10)
 );
 

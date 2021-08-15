@@ -1,5 +1,7 @@
 package com.example.demo.layer3;
 
+
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.layer2.BusDetails;
 import com.example.demo.layer2.BusDetailsNotFoundException;
+
 
 @Repository
 public class BusDetailRepositoryImpl extends BaseRepository implements BusDetailsRepository{
@@ -83,5 +86,13 @@ public class BusDetailRepositoryImpl extends BaseRepository implements BusDetail
 		return busDetails.getNo_of_seates() ;
 		
 	}
+	
+	@Transactional 
+	public void addBusDetails(BusDetails bus) {
+		// TODO Auto-generated method stub
+		EntityManager entityManager = getEntityManager();
+		entityManager.persist(bus);				
+	}
+	
 
 }

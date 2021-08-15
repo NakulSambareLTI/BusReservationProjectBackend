@@ -51,6 +51,24 @@ public class BusJourneyDetails {
 		this.journeyID = journeyID;
 	}
 
+	public BusJourneyDetails() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public BusJourneyDetails(int journeyID, String bus_no, String departure_time, String arrival_time,
+			String source_loc, String destination_loc, Date departure_date, int available_seates) {
+		super();
+		this.journeyID = journeyID;
+		this.bus_no = bus_no;
+		this.departure_time = departure_time;
+		this.arrival_time = arrival_time;
+		this.source_loc = source_loc;
+		this.destination_loc = destination_loc;
+		this.departure_date = departure_date;
+		this.available_seates = available_seates;
+	}
+
 	public String getBus_no() {
 		return bus_no;
 	}

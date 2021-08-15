@@ -12,9 +12,11 @@ import com.example.demo.layer2.BusJourneyDetails;
 import com.example.demo.layer2.BusJourneyDetailsNotFoundException;
 import com.example.demo.layer2.BusSeatDetailsNotFoundException;
 import com.example.demo.layer2.BusSeatesDetails;
+import com.example.demo.layer2.ReservationDetails;
 import com.example.demo.layer3.BusDetailRepositoryImpl;
 import com.example.demo.layer3.BusJourneyDetailsRepositoryImpl;
 import com.example.demo.layer3.BusSeatesDetailsRepositoryImpl;
+import com.example.demo.layer3.ReservationDetailsRepositoryImpl;
 
 @SpringBootTest
 class BusReservationApplicationTests {
@@ -25,6 +27,10 @@ class BusReservationApplicationTests {
 	BusDetailRepositoryImpl busDetailRepositoryImpl = new BusDetailRepositoryImpl();
 	@Autowired
 	BusSeatesDetailsRepositoryImpl busSeatesDetailsRepositoryImpl = new BusSeatesDetailsRepositoryImpl();
+	
+	@Autowired
+	ReservationDetailsRepositoryImpl reservationDetailsRepositoryImpl;
+	
 	@Test
 	void selectAllBusJourneyDetailsTest() {
 		List<BusJourneyDetails> busJourneyDetailsList=busJourneyDetailsRepositoryImpl.selectAllBusJourneyDetails();
@@ -96,7 +102,14 @@ class BusReservationApplicationTests {
 		System.out.println("Total No of seates = "+no_of_seates);
 	}
 	
-	
+	@Test
+	void ReservationDetailsTest()
+	{
+		List<ReservationDetails> reservationDetails=reservationDetailsRepositoryImpl.viewCurrentBookingByUserId("jack@gmail.com");
+		for (ReservationDetails reservationDetails2 : reservationDetails) {
+			System.out.println("Source Location "+reservationDetails2.getJourney_Id());
+		}
+	}
 	
 
 }

@@ -14,4 +14,5 @@ public interface BusDetailsService {
 	
 	int selectCostPerSeatService(String bus_no)throws BusDetailsNotFoundException;
 	int selectNoOfSeatsService(String bus_no) throws BusDetailsNotFoundException;
+	void addBusDetails(BusDetails bus);
 }

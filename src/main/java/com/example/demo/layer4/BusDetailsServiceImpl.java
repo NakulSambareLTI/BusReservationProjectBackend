@@ -49,5 +49,11 @@ public class BusDetailsServiceImpl implements BusDetailsService{
 		// TODO Auto-generated method stub
 		return busDetailRepositoryImpl.selectNoOfSeates(bus_no);
 	}
+	@Override
+	public void addBusDetails(BusDetails bus) {
+		// TODO Auto-generated method stub
+		busDetailRepositoryImpl.addBusDetails(bus);
+		
+	}
 
 }

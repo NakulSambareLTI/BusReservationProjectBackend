@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.layer2.BusJourneyDetails;
 import com.example.demo.layer2.BusJourneyDetailsNotFoundException;
 import com.example.demo.layer3.BusJourneyDetailsRepositoryImpl;
+import com.example.demo.layer3.NumberNotFoundException;
 @Service
 public class BusJourneyDetailServiceImpl implements BusJourneyDetailsService{
 	@Autowired
@@ -74,6 +75,20 @@ public class BusJourneyDetailServiceImpl implements BusJourneyDetailsService{
 		return busJourneyDetailsRepositoryImpl.selectAvailableSeates(busNo, journeyId);
 	}
 
-	
+//	@Override
+//	public boolean updatebusRoute(int journeyid, String source, String destination) {
+//		// TODO Auto-generated method stub
+//		return busJourneyDetailsRepositoryImpl.updatebusRoute(journeyid, source, destination);
+//	}
 
+	public void changeAvailableSeats(int jID,int rID) throws NumberNotFoundException{
+		System.out.println("changeAvailableSeats");
+		try {
+			busJourneyDetailsRepositoryImpl.changeAvailableSeats(jID,rID);
+		System.out.println("Seats Count Changed");
+		}
+		catch(NumberNotFoundException e) {
+		e.printStackTrace();
+		}
+		}
 }

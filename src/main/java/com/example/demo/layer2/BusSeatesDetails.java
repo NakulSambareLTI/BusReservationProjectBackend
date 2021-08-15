@@ -12,7 +12,7 @@ public class BusSeatesDetails {
 	@Column(name="SEAT_NO")
 	 private String seat_no;
 	@Column(name="RESERVATION_ID")
-	 private String reservation_id;
+	 private int reservation_id;
 	
 	@Column(name="JOURNEY_ID")
 	 private int journey_id;
@@ -25,11 +25,11 @@ public class BusSeatesDetails {
 		this.seat_no = seat_no;
 	}
 
-	public String getReservation_id() {
+	public int getReservation_id() {
 		return reservation_id;
 	}
 
-	public void setReservation_id(String reservation_id) {
+	public void setReservation_id(int reservation_id) {
 		this.reservation_id = reservation_id;
 	}
 
