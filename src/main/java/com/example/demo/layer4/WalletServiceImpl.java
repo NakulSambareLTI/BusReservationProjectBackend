@@ -41,14 +41,19 @@ public class WalletServiceImpl implements WalletService {
 		Long balance;
 		try {
 			balance = walletRepo.getBalance(userMailId);
-			walletRepo.updateBalance(userMailId,pin,balance+amount);
+			if(null != balance) {
+				balance  = balance + amount;
+			} else {
+				balance = amount;
+			}
+			walletRepo.updateBalance(userMailId,pin,balance);
 			balanceAdded=Boolean.TRUE;
 		} catch (Exception e) {
 			throw new WalletException("Error while adding the money to wallet");
 		}
 		
 		return balanceAdded;
-	} 
+	}
 
 	public Boolean processWalletPayment(String userMailId,String pin,Long amount) throws WalletException {
 		Boolean paymentSuccessful = Boolean.FALSE;
@@ -79,5 +84,7 @@ public class WalletServiceImpl implements WalletService {
 	public Long getBalance(String userMailId) throws WalletException {
 		return walletRepo.getBalance(userMailId);
 	}
+	
+	
 
 }

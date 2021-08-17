@@ -16,11 +16,12 @@ implements ReservationDetailsRepository{
 
 	
 	@Transactional
-	public void insertReservation(ReservationDetails ref) {
+	public int insertReservation(ReservationDetails ref) {
 		EntityManager em = getEntityManager();
 		em.persist(ref); //based on PK
+		int reserv_id=ref.getReservation_id();
 	System.out.println("reservation inserted...");
-		
+		return reserv_id;
 	}
 	
 	

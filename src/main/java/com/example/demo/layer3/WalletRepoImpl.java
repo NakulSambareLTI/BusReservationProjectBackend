@@ -104,11 +104,27 @@ public class WalletRepoImpl extends BaseRepository implements WalletRepo {
 	}
 	
 	@Transactional
+	public void deleteMoneyFromWallet(String mailID) throws NumberNotFoundException{
+			EntityManager entityManager = getEntityManager();
+			Query query = entityManager.createQuery("update WalletEntity c set c.walletAmount = ((select r.walletAmount from WalletEntity r where r.registeredEmail = :mail) -(select  b.totalAmountPaid from PaymentDetails b where b.registeredEmail = :mail))where c.registeredEmail = :mail").setParameter("mail",mailID );
+			//Query query = entityManager.createQuery("update WalletEntity b set b.available_seates = ((select s.available_seates from BusJourneyDetails s where s.journeyID = :jID) - (select r.seats_Booked from ReservationDetails r where r.journey_Id = :jID and r.reservation_id = :rID)) where b.journeyID = :jID").setParameter("jID",jID).setParameter("rID", rID);
+         
+			//query.setParameter("mail", mailID);
+			query.executeUpdate();
+		}
+
+	@Override
+	public void deleteMoneyToWallet(String mailID) throws NumberNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
+	@Transactional
 	public void addMoneyToWallet(String mailID) throws NumberNotFoundException{
 			EntityManager entityManager = getEntityManager();
-			Query query = entityManager.createQuery("update WalletEntity c set c.walletAmount = (select r.totalAmountPaid from PaymentDetails r where r.registeredEmail = :mail) + c.walletAmount where c.registeredEmail = :mail");
+			Query query = entityManager.createQuery("update CustomerWallet c set c.walletAmount = (select r.totalAmountPaid from PaymentDetails r where r.registeredEmail = :mail) + c.walletAmount where c.registeredEmail = :mail");
 			query.setParameter("mail", mailID);
 			query.executeUpdate();
 		}
+	
 
 }

@@ -15,8 +15,8 @@ public class WalletEntity  {
 	
 
 	@Id
-//	@SequenceGenerator(name="CUSTOMER_WALLET_WALLETID_GENERATOR", sequenceName="WALLET_ID")
-	@GeneratedValue //(strategy=GenerationType.SEQUENCE, generator="CUSTOMER_WALLET_WALLETID_GENERATOR")
+    @SequenceGenerator(name="CUSTOMER_WALLET_WALLETID_GENERATOR", sequenceName="WALLET_ID")
+	@GeneratedValue (strategy=GenerationType.SEQUENCE, generator="CUSTOMER_WALLET_WALLETID_GENERATOR")
 	@Column(name="WALLET_ID")
 	private Integer walletId;
 

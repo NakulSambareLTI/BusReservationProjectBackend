@@ -16,11 +16,12 @@ public class PaymentDetailsRepositoryImpl extends BaseRepository implements Paym
 
 	
 	@Transactional
-	public void insertPayment(PaymentDetails ref) {
+	public int insertPayment(PaymentDetails ref) {
 		EntityManager em = getEntityManager();
-		em.persist(ref); //based on PK
+		em.persist(ref);
+		int pid=ref.getPaymentId();//based on PK
 	System.out.println("Payment inserted...");
-		
+		return pid;
 	}
 
 	@Override

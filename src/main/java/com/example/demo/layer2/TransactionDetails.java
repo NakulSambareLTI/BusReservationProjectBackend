@@ -5,7 +5,9 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -13,7 +15,9 @@ import javax.persistence.Table;
 public class TransactionDetails {
 	
 	@Id
-	@GeneratedValue
+	//@GeneratedValue
+	@SequenceGenerator(name="transaction_details_transaction_id_GENERATOR", sequenceName="transaction_id")
+	@GeneratedValue (strategy=GenerationType.SEQUENCE, generator="transaction_details_transaction_id_GENERATOR")
 	 @Column(name="TRANSACTION_ID")
 	 private int transaction_id;
 	 

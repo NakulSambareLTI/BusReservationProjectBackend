@@ -7,7 +7,7 @@ import com.example.demo.layer2.ReservationDetails;
 
 public interface PaymentDetailsRepository {
 	
-	void insertPayment(PaymentDetails ref);
+	int insertPayment(PaymentDetails ref);
 	
 	public List<PaymentDetails> viewPaymentDetailsByPaymentId(int payment_id);
 

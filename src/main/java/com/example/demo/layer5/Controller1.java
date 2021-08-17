@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.layer2.BusSeatesDetails;
+import com.example.demo.layer2.ComplexClass;
+import com.example.demo.layer2.MyDto;
 import com.example.demo.layer2.PaymentDetails;
 import com.example.demo.layer2.ReservationDetails;
 import com.example.demo.layer2.TransactionDetails;
 import com.example.demo.layer3.BusJourneyDetailsRepositoryImpl;
 import com.example.demo.layer3.BusSeatesDetailsRepositoryImpl;
-
+import com.example.demo.layer3.NumberNotFoundException;
+import com.example.demo.layer3.WalletRepoImpl;
 import com.example.demo.layer4.Service1;
 import com.example.demo.layer4.ServiceImpl;
 
@@ -34,13 +37,19 @@ import com.example.demo.layer4.ServiceImpl;
 //@Component
 //@Repository
 
-@CrossOrigin(origins = "*")
-@Controller // it is a specialized version of @Component - marker to receive web request
+@CrossOrigin(origins ="*")
+//@CrossOrigin(origins = "http://localhost:4200")
+//@Controller // it is a specialized version of @Component - marker to receive web request
+@RestController
 @RequestMapping("/reserv")
 public class Controller1 {
 
 	@Autowired 
 	ServiceImpl service; //reservationRepoImpl Service
+	
+	
+	@Autowired 
+	WalletRepoImpl walletRepoImpl;
 //	@Autowired
 //	PaymentDetailsServiceImpl payService;
 //	@Autowired
@@ -72,31 +81,33 @@ public class Controller1 {
 	}
 //("registered_email")
 		
-	@PostMapping 
+	//@PostMapping 
 	@ResponseBody
-	@RequestMapping(value="/addReserve")
-		public String insertReservation(@RequestBody ReservationDetails rd) {
+	@PostMapping(path="/addReserve")
+		public int  insertReservation(@RequestBody ReservationDetails rd) {
+		System.out.println(rd.getString());
 		System.out.println("addReserver()...method ");
 		//BusDetails bus = new BusDetails(); // spring JPA - get the data from DB
 	//emp.setEmployeeNumber(eno);
 		ReservationDetails r=rd;
-		service.insertReservation(r);
+		Integer rid=service.insertReservation(r);
 			//empList.add(emp);
-		return "Reservation addedd sucessfully";
+		
+		return rid;
 		
 	}	
 	//==============PAYMENT=============
 	@PostMapping
 	@ResponseBody
 	@RequestMapping(value="/addPayment")
-		public String insertPayment(@RequestBody PaymentDetails rd) {
+		public int insertPayment(@RequestBody PaymentDetails rd) {
 		System.out.println("addReserver()...method ");
 		//BusDetails bus = new BusDetails(); // spring JPA - get the data from DB
 	//emp.setEmployeeNumber(eno);
 		PaymentDetails r=rd;
-		service.insertPayment(r);
+		int pid=service.insertPayment(r);
 			//empList.add(emp);
-		return "Payment addedd sucessfully";
+		return pid;
 	
 	}	
 	
@@ -116,6 +127,17 @@ public class Controller1 {
 		
 	}
 	
+	
+	//@ResponseBody
+	@PostMapping(path="/insertReserv1/{complex}")
+	public String insertRev(@RequestBody ComplexClass complexClass){
+		System.out.println("Starting Cancel Reservation");
+		service.insertReservationDetails1(complexClass.getReservationDetails(),complexClass.getPaymentDetails(),complexClass.getTransactionDetails());
+	       return "Working..";
+	}
+	
+	
+	
 	//============Transaction==========
 	
 	//@PostMapping 
@@ -124,7 +146,7 @@ public class Controller1 {
 		public String insertTransaction(@RequestBody TransactionDetails rd) {
 		System.out.println("addTransaction()...method ");
 		TransactionDetails r=rd;
-		service.insertTransaction(r);
+		int tid=service.insertTransaction(r);
 		return "Transaction addedd sucessfully";
 		
 	}
@@ -147,6 +169,14 @@ public class Controller1 {
 	
 	}
 	
+	@GetMapping
+	@ResponseBody
+	@RequestMapping(value="/deleteMoneyfromWallet/{registered_email}")
+	public void deleteFromWallet(@PathVariable String registered_email) throws NumberNotFoundException
+	{
+		 walletRepoImpl.deleteMoneyFromWallet(registered_email);
+	}
+	
 	//==============BusSeatesDetails================
 	
 	@GetMapping
@@ -163,6 +193,10 @@ public class Controller1 {
 		System.out.println("Lis of Seates Details updating.. ");
 		service.updateBusSeatesDetailsListSeat(rID,jID,seat_no);
 	}
+	
+	
+	
+	
 	
 	
 	
@@ -189,10 +223,31 @@ public class Controller1 {
 //		System.out.println("Bus Journey Details is updated....");
 //	}
 	
+//	@ResponseBody
+//	@RequestMapping(value="/seatCountDecrease/{jID}/{rID}")
+//	public void decreaseSeatCount(@PathVariable int jID, @PathVariable int rID)  {
+//		service.decreaseSeatCount(jID, rID);
+//	}
+//	
+
 	@ResponseBody
-	@RequestMapping(value="/seatCountDecrease/{jID}/{rID}")
-	public void decreaseSeatCount(@PathVariable int jID, @PathVariable int rID)  {
-		service.decreaseSeatCount(jID, rID);
+	@RequestMapping(value="/seatCountDecrease/")
+	public void decreaseSeatCount(@RequestBody MyDto myDto)  {
+		
+		
+		service.decreaseSeatCount(myDto.getJid(),myDto.getRid());
 	}
 	
+	
+//	@ResponseBody
+	
+	
+	
 }
+
+
+
+
+
+
+

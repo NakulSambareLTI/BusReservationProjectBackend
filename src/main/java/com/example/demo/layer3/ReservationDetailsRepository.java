@@ -14,7 +14,7 @@ public interface ReservationDetailsRepository {
 // void ReservationDetails
  //void addAResevervation(ReservationDetails ref);
 	
- void insertReservation(ReservationDetails ref);
+ int insertReservation(ReservationDetails ref);
  
 	//public List<ReservationDetails> viewAllBookingDetailsByReservationID(String reservation_id, LocalDate date);
  public List<ReservationDetails> viewBookingDetailsByReservationID(int reservation_id);

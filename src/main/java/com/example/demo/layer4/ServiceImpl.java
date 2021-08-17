@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.EmailUtility.EmailUtility;
 import com.example.demo.layer2.BusSeatesDetails;
 import com.example.demo.layer2.PaymentDetails;
 import com.example.demo.layer2.ReservationDetails;
@@ -35,13 +36,20 @@ public class ServiceImpl implements Service1 {
 	
 	@Autowired
 	WalletRepoImpl walletRepoImpl;
+	@Autowired
+	EmailUtility emailUtility;
 	
-	
-	 public void insertReservation(ReservationDetails rd) {
-			reservationDetailsRepository.insertReservation(rd);
-			
-		}
-		 
+	 public int insertReservation(ReservationDetails rd) {
+			int reserv_id=reservationDetailsRepository.insertReservation(rd);
+			emailUtility.sendEmail(rd.getRegistered_email(), "Success : The Ticket resreveration details", getEmailBody(rd));
+	     return reserv_id;	
+	 }
+	 
+	 
+	 private String getEmailBody(ReservationDetails reservationDetails) {
+		 return "Your ticket is booked successfully. Your journey scheduled on "+
+	 reservationDetails.getDeparture_Date()+". Your seat number is:"+reservationDetails.getSeats_Booked();
+	 }
 	
 	 public List<ReservationDetails> viewBookingDetailsByReservationID(int reservation_id){
 		return reservationDetailsRepository.viewBookingDetailsByReservationID(reservation_id);
@@ -111,8 +119,9 @@ public class ServiceImpl implements Service1 {
 	//================Transaction
 		
 		//@Override
-		public void insertTransaction(TransactionDetails rd) {
-		transactionDetailsRepository.insertTransaction(rd);
+		public int  insertTransaction(TransactionDetails rd) {
+	int tid=	transactionDetailsRepository.insertTransaction(rd);
+	return tid;
 			
 		}
 
@@ -131,10 +140,11 @@ public class ServiceImpl implements Service1 {
 	//==================Payment
 		
 		
-		public void insertPayment(PaymentDetails ref) {
+		public int insertPayment(PaymentDetails ref) {
 			//PaymentDetails pd=ref;
 			//pd.setPaymentId("PID223");
-			paymentDetailsRepository.insertPayment(ref);
+			int pid =paymentDetailsRepository.insertPayment(ref);
+			return pid;
 			
 		}
 		
@@ -145,6 +155,7 @@ public class ServiceImpl implements Service1 {
 
 		public List<PaymentDetails> viewCurrentPaymentByUserId(String registered_email){
 			return paymentDetailsRepository.viewCurrentPaymentByUserId(registered_email);
+			
 			
 			
 		}
@@ -213,7 +224,7 @@ public class ServiceImpl implements Service1 {
 			try {
 				busJourneyDetailsRepository.changeAvailableSeats(jID, rID);
 				busSeatesDetailsRepository.updateSeatDetails(rID);
-				addMoneyToWallet(email);
+				//addMoneyToWallet(email);
 			deleteTransaction(rID); deletePayment(rID);
 			deleteReservation(rID);
 			
@@ -222,4 +233,21 @@ public class ServiceImpl implements Service1 {
 				e.printStackTrace();
 			}
 		}
+		
+		public void insertReservationDetails1(ReservationDetails r,PaymentDetails p,TransactionDetails t)
+		{
+			int rid=reservationDetailsRepository.insertReservation(r);
+			
+			p.setReservationId(rid);
+			int pid= paymentDetailsRepository.insertPayment(p);
+			
+			t.setReservation_id(rid);
+			t.setPayment_id(pid);
+			transactionDetailsRepository.insertTransaction(t);
+			
+			
+			
+		}
+		
+		
 }

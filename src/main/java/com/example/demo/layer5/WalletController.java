@@ -60,12 +60,12 @@ public class WalletController {
 		return walletService.getBalance(userMailId);
 	}
 
-	@PostMapping
-	@ResponseBody
-	@RequestMapping(value = "/processWalletPayment/{userMailId}/{pin}/{amount}")
-	public Boolean processWalletPayment(@PathVariable String userMailId,@PathVariable String pin ,@PathVariable Long amount)
+	//@PostMapping
+	//@ResponseBody
+	@PostMapping(path = "/processWalletPayment")
+	public Boolean processWalletPayment(@RequestBody WalletEntity wallet)
 			throws WalletException {
-		return walletService.processWalletPayment(userMailId,pin,amount);
+		return walletService.processWalletPayment(wallet.getRegisteredEmail(),wallet.getWalletPin(),wallet.getWalletAmount());
 	}
 	
 	@PostMapping

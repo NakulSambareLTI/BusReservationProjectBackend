@@ -97,8 +97,9 @@ public class BusSeatesDetailsRepositoryImpl extends BaseRepository implements Bu
     	@Transactional
     	public void updateSeatDetails(int rID) throws NumberNotFoundException{
     	EntityManager entityManager = getEntityManager();
-    	Query query = entityManager.createQuery("update BusSeatesDetails b set b.reservation_id=0 where b.reservation_id = :rID");
+    	Query query = entityManager.createQuery("update BusSeatesDetails b set b.reservation_id=0 where b.reservation_id = :rID ").setParameter("rID", rID);
     	query.setParameter("rID", rID);
+    			
     	query.executeUpdate();
     	}
         

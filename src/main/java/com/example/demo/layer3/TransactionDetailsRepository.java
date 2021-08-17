@@ -9,7 +9,7 @@ import com.example.demo.layer2.TransactionDetails;
 @Repository
 public interface TransactionDetailsRepository {
 
-	 void insertTransaction(TransactionDetails ref);
+	 int insertTransaction(TransactionDetails ref);
 	 
 		//public List<ReservationDetails> viewAllBookingDetailsByReservationID(String reservation_id, LocalDate date);
 	 public List<TransactionDetails> viewTransactionDetailsByTransactionID(int transaction_id);

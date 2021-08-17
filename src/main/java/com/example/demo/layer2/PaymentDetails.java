@@ -16,8 +16,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name="payment_details")
 public class PaymentDetails {
 	@Id
-	@SequenceGenerator(schema = "BusReservation", name = "payment_details_payment_id_seq", sequenceName = "payment_details_payment_id_seq", allocationSize = 1) 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_details_payment_id_seq")
+	 @SequenceGenerator(name="payment_details_paymentId_GENERATOR", sequenceName="PAYMENT_ID")
+		@GeneratedValue (strategy=GenerationType.SEQUENCE, generator="payment_details_paymentId_GENERATOR")
 	//@GeneratedValue
 	
 	@Column(name="PAYMENT_ID")

@@ -28,7 +28,7 @@ public interface Service1{
 	//=============================Reservation
 	//void addAResevervation(ReservationDetails ref);
 	
-	 public void insertReservation(ReservationDetails rd);
+	 public int insertReservation(ReservationDetails rd);
 	public List<ReservationDetails> viewBookingDetailsByReservationID(int reservation_id);
 	
 	public List<ReservationDetails> viewCurrentBookingByUserId(String registered_email);

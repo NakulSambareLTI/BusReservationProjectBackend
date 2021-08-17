@@ -31,8 +31,8 @@ public interface WalletRepo {
 	 */
     public Long getBalance(String userMailId) throws WalletException;
     
+    void deleteMoneyToWallet(String mailID) throws NumberNotFoundException;
     
-    
-    void addMoneyToWallet(String mailID) throws NumberNotFoundException;
+    public void deleteMoneyFromWallet(String mailID) throws NumberNotFoundException;
 
 }

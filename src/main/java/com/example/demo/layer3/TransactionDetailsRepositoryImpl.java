@@ -15,10 +15,12 @@ import com.example.demo.layer2.TransactionDetails;
 public class TransactionDetailsRepositoryImpl extends BaseRepository implements TransactionDetailsRepository {
 
 	@Transactional
-	public void insertTransaction(TransactionDetails ref) {
+	public int insertTransaction(TransactionDetails ref) {
 		EntityManager em = getEntityManager();
 		em.persist(ref); //based on PK
+		int tid =ref.getTransaction_id();
 	System.out.println("Transaction inserted...");
+	return tid;
 		
 	}
 

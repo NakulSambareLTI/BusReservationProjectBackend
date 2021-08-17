@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,7 +25,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name="reservation_details")
 public class ReservationDetails {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="reservation_details_reservation_id_GENERATOR", sequenceName="reservation_id")
+	@GeneratedValue (strategy=GenerationType.SEQUENCE, generator="reservation_details_reservation_id_GENERATOR")
 	@Column(name="RESERVATION_ID")
 	private int reservation_id;
 	
@@ -35,6 +38,14 @@ public class ReservationDetails {
 //	@OneToOne(fetch=FetchType.EAGER)
 //	private UserProfile registered_email;
 	
+	
+public String getString() {
+	return "ReservationDetails [reservation_id=" + reservation_id + ", registered_email=" + registered_email
+			+ ", unregistered_email=" + unregistered_email + ", seats_Booked=" + seats_Booked + ", journey_Id="
+			+ journey_Id + ", departure_Date=" + departure_Date + ", reservation_Date=" + reservation_Date
+			+ ", reservation_Time=" + reservation_Time + ", driver_less=" + driver_less + "]";
+}
+
 	@Column(name="UNREGISTERED_EMAIL")
 	private String unregistered_email;
 	
@@ -127,6 +138,14 @@ public void setRegistered_email(String registered_email) {
 
 	public String getUnregistered_email() {
 		return unregistered_email;
+	}
+
+	public int getReservation_id() {
+		return reservation_id;
+	}
+
+	public void setReservation_id(int reservation_id) {
+		this.reservation_id = reservation_id;
 	}
 
 	public void setUnregistered_email(String unregistered_email) {
